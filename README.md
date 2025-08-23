@@ -61,11 +61,6 @@ math_equation_lib/
     2. All possible equations with operators '*', '/', '()'
     3. All possible equations with operators '+', '-', '*', '/', '()'
 
-## Installation
-```bash
-pip install git+https://github.com/username/math-equations-lib.git
-```
-
 ## Example: Equation Validation
 ```python
 from math_equations import equation_lib

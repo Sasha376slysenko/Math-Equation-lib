@@ -62,11 +62,6 @@ math_equation_lib/
     2. Всі можливі рівності з операторами '*', '/', '()'
     3. Всі можливі рівності з операторами '+', '-', '*', '/', '()'
 
-## Встановлення
-```bash
-pip install git+https://github.com/username/math-equations-lib.git
-```
-
 ## Приклад перевірки рівності
 ```python
 from math_equations import equation_lib
