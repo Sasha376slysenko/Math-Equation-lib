@@ -137,7 +137,10 @@ from math_equations import equation_lib
 
 class TestEvalEquation(unittest.TestCase):
     def setUp(self)-> None:
+        # Create configuration with the maximum number of combinations
         self.object_config = equation_lib.EquationConfig(500)
+
+        # Create an object for generating and verifying equations
         self.eq = equation_lib.EvalEquation(self.object_config)
 
     def test_eval_fast_one(self)-> None:

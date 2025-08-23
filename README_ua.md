@@ -138,7 +138,10 @@ from math_equations import equation_lib
 
 class TestEvalEquation(unittest.TestCase):
     def setUp(self)-> None:
+        # Створюємо конфігурацію з максимальною кількістю комбінації
         self.object_config = equation_lib.EquationConfig(500)
+
+        # Створюємо об'єкт для генерації та перевірки рівностей
         self.eq = equation_lib.EvalEquation(self.object_config)
 
     def test_eval_fast_one(self)-> None:
