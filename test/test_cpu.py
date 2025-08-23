@@ -1,8 +1,8 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-data_custom_eval = np.genfromtxt('custom_eval_generation_eq.csv', delimiter=',', dtype=None, encoding='utf-8', names=True)
-data_python_eval = np.genfromtxt('python_eval_generation_eq.csv', delimiter=',', dtype=None, encoding='utf-8', names=True)
+data_custom_eval = np.genfromtxt('test/data_cpu/custom_eval_generation_eq.csv', delimiter=',', dtype=None, encoding='utf-8', names=True)
+data_python_eval = np.genfromtxt('test/data_cpu/python_eval_generation_eq.csv', delimiter=',', dtype=None, encoding='utf-8', names=True)
 
 # print console title csv
 for i, title in enumerate(data_custom_eval.dtype.names):

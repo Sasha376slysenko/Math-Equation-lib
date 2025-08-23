@@ -2,11 +2,9 @@ import gc
 import numpy as np
 import tracemalloc as trc
 
-from equation_lib import EvalEquation as Custom_eval
-from equation_lib import EquationConfig as Custom_config
-
-from eq import EquationConfig as Config_eval
-from eq import EvalEquation as Eval_eval
+from math_equations import equation_lib
+from math_equation_lib.math_equations.eq import EquationConfig as Config_eval
+from math_equation_lib.math_equations.eq import EvalEquation as Eval_eval
 
 from dict_in_for import *
 from typing import Callable
@@ -16,8 +14,8 @@ from matplotlib import pyplot as plt
 from colorama import Back, Fore, Style
 
 
-object_custom = Custom_config(4000)
-custom_eval = Custom_eval(object_custom)
+object_custom = equation_lib.EquationConfig(4000)
+custom_eval = equation_lib.EvalEquation(object_custom)
 
 object_eval = Config_eval(4000)
 eval_eval = Eval_eval(object_eval)

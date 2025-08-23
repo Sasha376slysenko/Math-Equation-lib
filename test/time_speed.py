@@ -1,10 +1,8 @@
 import timeit
 
-from eq import EvalEquation as EvalEval
-from eq import EquationConfig as EquationConfig
-
-from equation_lib import EquationConfig as ConfigCustom
-from equation_lib import EvalEquation as EvalCustom
+from math_equations import equation_lib
+from math_equation_lib.math_equations.eq import EvalEquation as EvalEval
+from math_equation_lib.math_equations.eq import EquationConfig as EquationConfig
 
 from sympy import sympify
 from numexpr import evaluate
@@ -15,8 +13,8 @@ from matplotlib import pyplot as plt
 obj_evl = EquationConfig(15200)
 eval_eval = EvalEval(obj_evl)
 
-obj_custom = ConfigCustom(15200)
-custom_eval = EvalCustom(obj_custom)
+obj_custom = equation_lib.EquationConfig(15200)
+custom_eval = equation_lib.EvalEquation(obj_custom)
 
 times_custom: list[list[float]] = []
 times_python: list[list[float]] = []
