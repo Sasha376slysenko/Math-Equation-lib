@@ -186,3 +186,28 @@ class TestEvalEquation(unittest.TestCase):
         self.assertEqual(self.eq._eval_fast('(8-9)^(9-5)'), 1)
         self.assertEqual(self.eq._eval_fast('(9-8)^(6-9)'), 1)
 ```
+
+## Performance
+
+Below is a comparison of the RAM usage of 'equation_lib' with a naive Python implementation
+
+### RAM usage
+
+![Memory usage small input](test/res_test_ram/test_generation_eq_4-generation-equation-1.png)
+
+- When generating a large number of equalities, '' takes up less RAM.
+- The built-in function '' compiles the string into bytecode each time, which increases resource consumption.
+
+![Memory usage medium input](test/res_test_ram/test_generation_eq_4-generation-equation-2.png)
+
+- When calling more than 30 equalities, 'eval' starts to load memory significantly more.
+
+![Memory usage hard input](test/res_test_ram/test_generation_eq_4-generation-equation-3.png)
+
+- There is a sharp jump in memory usage in 'eval'
+- This is explained by additional Cpython allocations during bulk calls.
+
+![Memory usage strec input](test/res_test_ram/test_generation_eq_4-generation-equation-4.png)
+
+- After the jump, the memory stabilizes at a new level.
+- 'equation_lib' shows more stable results even under high load.

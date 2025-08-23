@@ -187,3 +187,29 @@ class TestEvalEquation(unittest.TestCase):
         self.assertEqual(self.eq._eval_fast('(8-9)^(9-5)'), 1)
         self.assertEqual(self.eq._eval_fast('(9-8)^(6-9)'), 1)
 ```
+
+## Продуктивність
+
+Нижче наведено порівняння використання оперативної пам'яті 'equation_lib'
+із наївною реалізацією на Python
+
+### Використання оперативної пам'яті
+
+![Memory usage small input](test/res_test_ram/test_generation_eq_4-generation-equation-1.png)
+
+- При генерації великої кількості рівностей '' займає менше оперативної пам'яті.
+- Вбудована функція '' кожного разу компілює рядок у байт-код, що збільшує споживання ресурсів.
+
+![Memory usage medium input](test/res_test_ram/test_generation_eq_4-generation-equation-2.png)
+
+- При виклику понад 30 рівностей 'eval' починає значно більше навантажувати пам'ять.
+
+![Memory usage hard input](test/res_test_ram/test_generation_eq_4-generation-equation-3.png)
+
+- Спостерігається різький стрибок використання пам'яті у 'eval'
+- Це пояснюється додатковими алокаціями Cpython при масових викликах.
+
+![Memory usage strec input](test/res_test_ram/test_generation_eq_4-generation-equation-4.png)
+
+- Після стрибка пам'ять стабілізується на новому рівні.
+- 'equation_lib' показує стабільніші результати навіть при високому навантаженні.
