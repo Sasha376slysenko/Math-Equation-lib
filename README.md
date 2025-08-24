@@ -51,7 +51,7 @@ math_equation_lib/
 1. In order to check whether the equality is correct, you must first pass the input characters through the lexical analyzer.
 2. Which will create tokens then build a tree based on mathematical operations.
 3. And recursively bypass it with a gradual decrease in the priority of mathematical operations.
-4. The tree is circumvented according to the rules of priority of the operation ('()', '^', '*', '/', '+', '-').
+4. The tree is circumvented according to the rules of priority of the operation ('()', '^', '*, /', '+, -').
 5. Recursive evaluation of tree nodes allows you to get the value of the expression and check whether there is equality
    correct (left part == right part).
 
