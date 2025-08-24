@@ -47,7 +47,7 @@ math_equation_lib/
 └─README.md
 ```
 
-## Principle of operationPrinciple of operation
+## Principle of operation
 1. In order to check whether the equality is correct, you must first pass the input characters through the lexical analyzer.
 2. Which will create tokens then build a tree based on mathematical operations.
 3. And recursively bypass it with a gradual decrease in the priority of mathematical operations.
