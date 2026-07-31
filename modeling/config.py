@@ -80,14 +80,15 @@ class Config:
 
     plot_ram_use: str = field(init=False)
     plot_cpu_use: str = field(init=False)
+    self.plot_total_res: str = field(init=False)
     plot_cpu_energy_use: str = field(init=False)
     plot_cpu_use_temp_profile: str = field(init=False)
 
     def __post_init__(self):
         # save dir
-        self.SAVE_DIR_PLOT: Path = self.BASE_DIR / self.arch_name / 'result_modeling'
-        self.SAVE_DIR_DATA_EV: Path = self.BASE_DIR / 'data' / self.arch_name / 'python_eval'
-        self.SAVE_DIR_DATA_C_EV: Path = self.BASE_DIR / 'data' / self.arch_name / 'custom_eval'
+        self.SAVE_DIR_PLOT = self.BASE_DIR / 'results' / self.arch_name
+        self.SAVE_DIR_DATA_EV = self.BASE_DIR / 'data' / self.arch_name / 'python_eval'
+        self.SAVE_DIR_DATA_C_EV = self.BASE_DIR / 'data' / self.arch_name / 'custom_eval'
 
         # Automatically make dir
         self.SAVE_DIR_PLOT.mkdir(parents=True, exist_ok=True)
@@ -95,25 +96,26 @@ class Config:
         self.SAVE_DIR_DATA_C_EV.mkdir(parents=True, exist_ok=True)
 
         # Data export python eval
-        self.file_py_heap_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "py_heap_ev.csv")
-        self.file_ram_uss_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "ram_uss_ev.csv")
-        self.file_ram_rss_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "ram_rss_ev.csv")
-        self.file_cpu_load_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_load_ev.csv")
-        self.file_cpu_freq_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_freq_ev.csv")
-        self.file_cpu_temp_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_temp_ev.csv")
-        self.file_cpu_energy_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_energy_ev.csv")
+        self.file_py_heap_ev = os.path.join(self.SAVE_DIR_DATA_EV, "py_heap_ev.csv")
+        self.file_ram_uss_ev = os.path.join(self.SAVE_DIR_DATA_EV, "ram_uss_ev.csv")
+        self.file_ram_rss_ev = os.path.join(self.SAVE_DIR_DATA_EV, "ram_rss_ev.csv")
+        self.file_cpu_load_ev = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_load_ev.csv")
+        self.file_cpu_freq_ev = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_freq_ev.csv")
+        self.file_cpu_temp_ev = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_temp_ev.csv")
+        self.file_cpu_energy_ev = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_energy_ev.csv")
 
         # Data export custom eval
-        self.file_py_heap_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "py_heap_c_ev.csv")
-        self.file_ram_uss_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_uss_c_ev.csv")
-        self.file_ram_rss_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_rss_c_ev.csv")
-        self.file_cpu_load_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_load_c_ev.csv")
-        self.file_cpu_freq_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_freq_c_ev.csv")
-        self.file_cpu_temp_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_temp_c_ev.csv")
-        self.file_cpu_energy_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_energy_c_ev.csv")
+        self.file_py_heap_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "py_heap_c_ev.csv")
+        self.file_ram_uss_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_uss_c_ev.csv")
+        self.file_ram_rss_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_rss_c_ev.csv")
+        self.file_cpu_load_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_load_c_ev.csv")
+        self.file_cpu_freq_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_freq_c_ev.csv")
+        self.file_cpu_temp_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_temp_c_ev.csv")
+        self.file_cpu_energy_c_ev = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_energy_c_ev.csv")
 
         # Plot graphs
-        self.plot_ram_use: str = os.path.join(self.SAVE_DIR_PLOT, "ram_used.png")
-        self.plot_cpu_use: str = os.path.join(self.SAVE_DIR_PLOT, "cpu_used.png")
-        self.plot_cpu_energy_use: str = os.path.join(self.SAVE_DIR_PLOT, "cpu_energy_used.png")
-        self.plot_cpu_use_temp_profile: str = os.path.join(self.SAVE_DIR_PLOT, "hardware_3d_profile.png")
+        self.plot_ram_use = os.path.join(self.SAVE_DIR_PLOT, "ram_used.png")
+        self.plot_cpu_use = os.path.join(self.SAVE_DIR_PLOT, "cpu_used.png")
+        self.plot_total_res = os.path.join(self.SAVE_DIR_PLOT, "total_res.png")
+        self.plot_cpu_energy_use = os.path.join(self.SAVE_DIR_PLOT, "cpu_energy_used.png")
+        self.plot_cpu_use_temp_profile = os.path.join(self.SAVE_DIR_PLOT, "hardware_3d_profile.png")
