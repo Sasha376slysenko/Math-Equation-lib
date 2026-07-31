@@ -1,0 +1,23 @@
+# Web application
+Flask>=2.0.0
+Werkzeug>=2.0.0
+python-dotenv
+pyfiglet
+
+# C/C++ Core
+Cython>=3.0.0
+pybind11>=2.10.0
+
+# Physics modeling
+numpy>=2.4.6
+numba>=0.65.1
+
+# Visualization
+PyQt6>=6.4.0
+pyqtgraph>=0.13.0
+vpython>=3.1.0
+
+# Testing & Unittest
+pytest>=7.0.0
+colorama
+psutil

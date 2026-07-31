@@ -1,0 +1,13 @@
+result length: 
+Max length Eq_4: 285
+Max length Eq_5: 2936
+Max length Eq_6: 5087
+Max length Eq_7: 12230
+Max length Eq_8: 32897
+
+Memory Eq_4(kbite): 2.8
+Memory Eq_5(kbite): 29.4
+Memory Eq_6(kbite): 50.9
+Memory Eq_7(kbite): 122.3
+Memory Eq_8(kbite): 329.0
+Memory total(kbite): 534.3

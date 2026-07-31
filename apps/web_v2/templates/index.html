@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="uk">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Equation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/home.main.css">
+        <link rel="icon" type="image/x-icon" href="/static/img/logo.ico">
+        <link rel="stylesheet" type="text/css" href="/static/css/preloader.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/dilogBox.main.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/stop_timer.main.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/windowModeGame.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/slider.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/dialogFeedback.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/ChartDiagram.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/documentDeveloper.css">
+    </head>
+    <body>
+<!--GENERATE_LEVELS_FILES-->
+        <header id="header">
+            <div class="header-container">
+<!--//////////// LANGUAGE-->
+                <button id="language" type="button">
+                    <img src="/static/img/language.png" width="30" height="30" alt="language">
+                </button>
+
+<!--//////////// COLOR-THEME-->
+                <button id="color-theme" type="button">
+                    <img src="/static/img/night-mode.png" width="30" height="30" alt="night mode">
+                </button>
+
+<!--//////////// SOUND-->
+                <button id="sound">
+                    <img src="/static/img/turn_off_music.png" width="30" height="30" alt="sound">
+                </button>
+
+<!--//////////// INFORMATION-->
+                <button id="info" type="button">
+                    <img src="/static/img/info.png" width="30" height="30" alt="about-us">
+                </button>
+            </div>
+        </header>
+
+<!--MODAL WINDOW-->
+        <div class="modal-window" id="modal-feedback">
+            <div class="modal-window-content">
+                <span id="closeBtn-1">&times;</span>
+                <p id="modal-1">
+                    Привіт, вас вітає модальне вікно.<br>
+                    Опишіть рівність з якою сталась проблема, якщо вона є.
+                    Або оценіть роботу, якщо все сподобалось.
+                </p>
+                <form id="usr-1">
+                    <textarea id="feedBack-input" placeholder="Залишити відгук" required title="Заповніть поле"></textarea>
+                    <div class="wrapper-buttonFeedBack">
+                        <button id="ButtonFeedbackInput" type="submit">Надіслати</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<!--MODAL DEVELOPER-->
+        <div id="btnAppend"></div>
+        <div class="modal-window-developer" id="modal-developer">
+            <div class="modal-content-developer">
+                <span id="closeBtn-2">&times;</span>
+                <p id="modal-2">Привіт, це вікно розробника. Якщо ти розробник зайди.</p>
+                <form id="usr-2">
+                    <input name="username" id="username" type="text" placeholder="Username" required title="Заповніть поле">
+                    <input name="password" id="password" type="password" placeholder="Password" required title="Заповніть поле">
+                    <div class="wrapper-developer">
+                        <button id="btnFeedBackSql" type="submit">Підтвердити</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+<!--MODAL ABOUT US-->
+    <div class="modal-window-abut-us" id="modal-abut-us">
+        <div class="modal-content-abut-us">
+            <span id="closeBtn-3">&times;</span>
+            <p id="modal-3"></p>
+        </div>
+    </div>
+
+<!--LOUDER-->
+        <div id="page-preloader" class="preloader">
+            <div id="loader" class="loader"></div>
+        </div>
+
+<!--GAME-CONTENT-->
+        <div id="CARD-container" class="CARD-container">
+            <div id="card-game" class="card-game">
+                <div class="card-game-text">
+                    <h1 id="animated-h1">Рівняння пам'яті</h1>
+                    <p id="p-game-content">
+                        Тренуй пам’ять — рівняння за тебе не вирішить ніхто!
+                    </p>
+                </div>
+            </div>
+            <form id="myForm">
+                <button type="submit" id="button_js">Дізнатися більше</button>
+            </form>
+        </div>
+        <noscript>you have it turned off JavaScript, turn it on JavaScript</noscript>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+        <script src="/static/js/home-language.js"></script>
+        <script src="/static/js/index.js"></script>
+        <script src="/static/js/preloader.js"></script>
+        <script src="/static/js/confetti.js"></script>
+    </body>
+</html>

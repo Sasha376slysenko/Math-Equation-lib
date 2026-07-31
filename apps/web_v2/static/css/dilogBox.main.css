@@ -1,0 +1,63 @@
+.elDivEquationResult{
+    /*background-color: rgb(237, 185, 183);*/
+    background-color: #D6D6D6;
+    border-radius: clamp(10px, 3vw, 50px);
+    color: rgb(29, 44, 21);
+    font-size: clamp(28px, 6vw, 50px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px 20px;
+    transition: all 0.3s ease;
+}
+
+.elDivDigitsResult{
+    width: clamp(200px, 40vw, 400px);
+    height: clamp(40px, 8vw, 75px);
+    font-size: clamp(24px, 5vw, 50px);
+    padding: clamp(5px, 2vw, 10px);
+    margin: clamp(1px, 3vw, 5px);
+    color: rgb(29, 44, 21);
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.elDivLevel4SymbolsMath,
+.elDivLevel5SymbolsMath,
+.elDivLevel6SymbolsMath,
+.elDivLevel7SymbolsMath,
+.elDivLevel8SymbolsMath,
+.elDivLevel4SymbolsMathEquals,
+.elDivLevel5SymbolsMathEquals,
+.elDivLevel6SymbolsMathEquals,
+.elDivLevel7SymbolsMathEquals,
+.elDivLevel8SymbolsMathEquals{
+    height: clamp(60px, 10vw, 98px);
+    margin: clamp(1px, 3vw, 8px);
+    color: rgb(29, 44, 21);
+    background-color: #e6f7ff;
+    border: 1px solid #cce9f3;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.elDivLevel4SymbolsMathEquals,
+.elDivLevel5SymbolsMathEquals,
+.elDivLevel6SymbolsMathEquals,
+.elDivLevel7SymbolsMathEquals,
+.elDivLevel8SymbolsMathEquals{
+    width: clamp(250px, 40vw, 370px);
+}
+
+.elDivLevel4SymbolsMath,
+.elDivLevel5SymbolsMath,
+.elDivLevel6SymbolsMath,
+.elDivLevel7SymbolsMath,
+.elDivLevel8SymbolsMath{
+    width: clamp(200px, 40vw, 330px);
+}

@@ -1,0 +1,170 @@
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:10px;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    background-color: white;
+}
+
+.container-chart{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title-chart{
+    text-align: center;
+    font-family: 'Roboto Bold', sans-serif;
+}
+
+.chart-wrapper{
+    width: 400px;
+    height: 410px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ButtonGlobalFinish{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1px solid black;
+}
+
+/*
+ * +--------------------+
+ * | Asus Zen Book Fold |
+ * +--------------------+
+*/
+@media screen and (max-width: 853px) and (max-height: 1280px){
+    .chart-wrapper{ width: 400px; height: 400px; }
+}
+
+/*
+ * +-----------------------------+
+ * | Планшети (iPad/ Galaxy Tab) |
+ * +-----------------------------+
+*/
+@media(max-width: 1024px){
+    .chart-wrapper{ width: 400px; height: 400px; }
+}
+
+/*
+ * +-----------------------------------------------------+
+ * | Маленькі планшети (iPad Mini, 7 - дюймові планшети) |
+ * +-----------------------------------------------------+
+*/
+@media(max-width: 820px){
+    .chart-wrapper{ width: 400px; height: 400px; }
+}
+
+/*
+ * +----------------------------------------------------------------+
+ * | Великі смартфони (iPhone 14 Pro Max, Samsung Galaxy s22 Ultra) |
+ * +----------------------------------------------------------------+
+ */
+@media (max-width: 600px){
+    .chart-wrapper{ width: 400px; height: 400px; }
+}
+
+/*
+ * +----------------------------------------------------------+
+ * | Звичайні смартфони (iPhone 12/13/14, Samsung Galaxy s22) |
+ * +----------------------------------------------------------+
+*/
+@media (max-width: 480px){
+    .chart-wrapper{ width: 380px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 380px; height: 280px}
+}
+
+
+/*
+ * +-----------+
+ * | iPhone SE |
+ * +-----------+
+*/
+@media screen and (max-width: 375px) and (max-height: 667px){
+    .chart-wrapper{ width: 355px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 355px; height: 280px}
+}
+
+/*
+ * +-----------+
+ * | iPhone XR |
+ * +-----------+
+*/
+@media screen and (max-width: 414px) and (max-height: 896px){
+    .chart-wrapper{ width: 360px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 360px; height: 280px}
+}
+
+/*
+ * +---------------+
+ * | iPhone 12 Pro |
+ * +---------------+
+*/
+@media screen and (max-width: 390px) and (max-height: 844px){
+    .chart-wrapper{ width: 365px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 365px; height: 280px}
+}
+
+/*
+ * +-------------------+
+ * | iPhone 14 Pro Max |
+ * +-------------------+
+*/
+@media screen and (max-width: 430px) and (max-height: 932px){
+    .chart-wrapper{ width: 370px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 370px; height: 280px}
+}
+
+/*
+ * +-----------------------------------+
+ * | Pixel 7, Samsung Galaxy s20 Ultra |
+ * +-----------------------------------+
+*/
+@media screen and (max-width: 412px) and (max-height: 915px){
+    .chart-wrapper{ width: 370px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 370px; height: 280px}
+}
+
+/*
+ * +--------------------+
+ * | Samsung Galaxy s8+ |
+ * +--------------------+
+*/
+@media screen and (max-width: 360px) and (max-height: 740px){
+    .chart-wrapper{ width: 340px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 340px; height: 280px}
+}
+
+/*
+ * +-----------------------+
+ * | Samsung Galaxy A51/71 |
+ * +-----------------------+
+*/
+@media screen and (max-width: 412px) and (max-height: 914px){
+    .chart-wrapper{ width: 375px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 375px; height: 280px}
+}
+
+/*
+ * +-----------------+
+ * | Galaxy Z Fold 5 |
+ * +-----------------+
+*/
+@media screen and (max-width: 344px) and (max-height: 882px){
+    .chart-wrapper{ width: 320px; height: 280px; overflow: scroll; }
+    .wrapper{ overflow-x: scroll; overflow-y: scroll; width: 320px; height: 280px}
+}

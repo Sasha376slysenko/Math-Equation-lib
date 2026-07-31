@@ -1,0 +1,119 @@
+import os
+import re
+import platform
+import subprocess
+from pathlib import Path
+from dataclasses import dataclass, field
+
+
+def replace_platform(model: str) -> str:
+    slug: str = re.sub(
+        r'[^a-zA-Z0-9]+',
+        '_', model
+    ).strip().lower()
+    return slug
+
+
+"""
+Detected architecture:
++---------------------------+
+|1. System OS.              |
+|2. Machine.                |
+|3. IF OS.                  |
+|4. MacOS, Linux, UnknownOS.|
+|5. CPU info.               |
++---------------------------+
+"""
+def detect_architecture() -> str:
+    result_platform: str
+    system = platform.system().lower()
+    machine = platform.machine().lower()
+
+    if system == "darwin":
+        try:
+            brand: str = subprocess.check_output([
+                "sysctl", "-n", "machdep.cpu.brand_string"
+            ]).decode().strip()
+            return replace_platform(brand)
+        except Exception:
+            return f"apple_{machine}"
+
+    elif system == "linux":
+        try:
+            with open("/proc/cpuinfo", "r") as file:
+                for line in file:
+                    if "model name" in line:
+                        model: str = line.split(":")[1].strip()
+                        return replace_platform(model)
+        except Exception:
+            pass
+
+        return f"linux_{machine}"
+    return f"unknown_{system}_{machine}"
+
+
+@dataclass
+class Config:
+    arch_name: str = field(default_factory=detect_architecture)
+    BASE_DIR: Path = field(default_factory=lambda: Path(__file__).parent)
+
+    # Dynamic filed
+    SAVE_DIR_PLOT: Path = field(init=False)
+    SAVE_DIR_DATA_EV: Path = field(init=False)
+    SAVE_DIR_DATA_C_EV: Path = field(init=False)
+
+    file_py_heap_ev: str = field(init=False)
+    file_ram_uss_ev: str = field(init=False)
+    file_ram_rss_ev: str = field(init=False)
+    file_cpu_load_ev: str = field(init=False)
+    file_cpu_freq_ev: str = field(init=False)
+    file_cpu_temp_ev: str = field(init=False)
+    file_cpu_energy_ev: str = field(init=False)
+
+    file_py_heap_c_ev: str = field(init=False)
+    file_ram_uss_c_ev: str = field(init=False)
+    file_ram_rss_c_ev: str = field(init=False)
+    file_cpu_load_c_ev: str = field(init=False)
+    file_cpu_freq_c_ev: str = field(init=False)
+    file_cpu_temp_c_ev: str = field(init=False)
+    file_cpu_energy_c_ev: str = field(init=False)
+
+    plot_ram_use: str = field(init=False)
+    plot_cpu_use: str = field(init=False)
+    plot_cpu_energy_use: str = field(init=False)
+    plot_cpu_use_temp_profile: str = field(init=False)
+
+    def __post_init__(self):
+        # save dir
+        self.SAVE_DIR_PLOT: Path = self.BASE_DIR / self.arch_name / 'result_modeling'
+        self.SAVE_DIR_DATA_EV: Path = self.BASE_DIR / 'data' / self.arch_name / 'python_eval'
+        self.SAVE_DIR_DATA_C_EV: Path = self.BASE_DIR / 'data' / self.arch_name / 'custom_eval'
+
+        # Automatically make dir
+        self.SAVE_DIR_PLOT.mkdir(parents=True, exist_ok=True)
+        self.SAVE_DIR_DATA_EV.mkdir(parents=True, exist_ok=True)
+        self.SAVE_DIR_DATA_C_EV.mkdir(parents=True, exist_ok=True)
+
+        # Data export python eval
+        self.file_py_heap_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "py_heap_ev.csv")
+        self.file_ram_uss_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "ram_uss_ev.csv")
+        self.file_ram_rss_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "ram_rss_ev.csv")
+        self.file_cpu_load_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_load_ev.csv")
+        self.file_cpu_freq_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_freq_ev.csv")
+        self.file_cpu_temp_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_temp_ev.csv")
+        self.file_cpu_energy_ev: str = os.path.join(self.SAVE_DIR_DATA_EV, "cpu_energy_ev.csv")
+
+        # Data export custom eval
+        self.file_py_heap_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "py_heap_c_ev.csv")
+        self.file_ram_uss_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_uss_c_ev.csv")
+        self.file_ram_rss_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "ram_rss_c_ev.csv")
+        self.file_cpu_load_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_load_c_ev.csv")
+        self.file_cpu_freq_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_freq_c_ev.csv")
+        self.file_cpu_temp_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_temp_c_ev.csv")
+        self.file_cpu_energy_c_ev: str = os.path.join(self.SAVE_DIR_DATA_C_EV, "cpu_energy_c_ev.csv")
+
+        # Plot graphs
+        self.plot_ram_use: str = os.path.join(self.SAVE_DIR_PLOT, "ram_used.png")
+        self.plot_cpu_use: str = os.path.join(self.SAVE_DIR_PLOT, "cpu_used.png")
+        self.plot_cpu_energy_use: str = os.path.join(self.SAVE_DIR_PLOT, "cpu_energy_used.png")
+        self.plot_cpu_use_temp_profile: str = os.path.join(self.SAVE_DIR_PLOT, "hardware_3d_profile.png")

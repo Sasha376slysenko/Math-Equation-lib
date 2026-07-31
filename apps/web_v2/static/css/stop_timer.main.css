@@ -1,0 +1,119 @@
+.stopTimer{
+    border-radius: 50px;
+    width: 500px;
+    height: 100px;
+    text-align: center;
+    font-size: 35px;
+    color: rgba(29, 44, 21);
+    margin-top: 200px;
+    padding-top: 40px;
+    box-shadow: 2px 8px 12px rgba(0, 0, 0, 0.5);
+}
+
+/*
+ * +-----------------------------+
+ * | Планшети (iPad/ Galaxy Tab) |
+ * +-----------------------------+
+*/
+@media(max-width: 1024px){
+    .stopTimer{ width: 400px; height: 90px; font-size: 30px; padding-top: 35px;}
+}
+
+/*
+ * +-----------------------------------------------------+
+ * | Маленькі планшети (iPad Mini, 7 - дюймові планшети) |
+ * +-----------------------------------------------------+
+*/
+@media(max-width: 820px){
+    .stopTimer{ width: 350px; height: 80px; font-size: 28px; padding-top: 30px;}
+}
+
+/*
+ * +----------------------------------------------------------------+
+ * | Великі смартфони (iPhone 14 Pro Max, Samsung Galaxy s22 Ultra) |
+ * +----------------------------------------------------------------+
+ */
+@media (max-width: 600px) {
+    .stopTimer{ width: 300px; height: 70px; font-size: 24px; padding-top: 150px;}
+}
+
+/*
+ * +----------------------------------------------------------+
+ * | Звичайні смартфони (iPhone 12/13/14, Samsung Galaxy s22) |
+ * +----------------------------------------------------------+
+*/
+@media (max-width: 480px) {
+    .stopTimer{ width: 90%; height: 60px; font-size: 20px; padding-top: 20px; margin-top: 170px; border-radius: 30px;}
+}
+
+/*
+ * +-----------+
+ * | iPhone SE |
+ * +-----------+
+*/
+@media screen and (max-width: 375px) and (max-height: 667px){
+    .stopTimer{ width: 90%; height: 60px; font-size: 20px; padding-top: 20px; margin-top: 170px; border-radius: 30px;}
+}
+
+/*
+ * +-----------+
+ * | iPhone XR |
+ * +-----------+
+*/
+@media screen and (max-width: 414px) and (max-height: 897px){
+    .stopTimer{ width: 90%; height: 65px; font-size: 22px; padding-top: 20px; margin-top: 200px; border-radius: 30px;}
+}
+
+/*
+ * +---------------+
+ * | iPhone 12 Pro |
+ * +---------------+
+*/
+@media screen and (max-width: 390px) and (max-height: 844px){
+    .stopTimer{ width: 90%; height: 65px; font-size: 22px; padding-top: 20px; margin-top: 190px; border-radius: 30px;}
+}
+
+/*
+ * +-------------------+
+ * | iPhone 14 Pro Max |
+ * +-------------------+
+*/
+@media screen and (max-width: 430px) and (max-height: 932px){
+    .stopTimer{ width: 90%; height: 70px; font-size: 24px; padding-top: 20px; margin-top: 200px; border-radius: 30px;}
+}
+
+/*
+ * +----------------------------+
+ * | Pixel 7, Samsung s20 Ultra |
+ * +----------------------------+
+*/
+@media screen and (max-width: 412px) and (max-height: 915px){
+    .stopTimer{ width: 90%; height: 65px; font-size: 22px; padding-top: 20px; margin-top: 180px; border-radius: 30px;}
+}
+
+/*
+ * +--------------------+
+ * | Samsung Galaxy s8+ |
+ * +--------------------+
+*/
+@media screen and (max-width: 360px) and (max-height: 740px){
+    .stopTimer{ width: 90%; height: 65px; font-size: 22px; padding-top: 20px; margin-top: 170px; border-radius: 30px;}
+}
+
+/*
+ * +-----------------------+
+ * | Samsung Galaxy A51/71 |
+ * +-----------------------+
+*/
+@media screen and (max-width: 412px) and (max-height: 914px){
+    .stopTimer{ width: 90%; height: 65px; font-size: 22px; padding-top: 20px; margin-top: 180px; border-radius: 30px;}
+}
+
+/*
+ * +-----------------+
+ * | Galaxy Z Fold 5 |
+ * +-----------------+
+*/
+@media screen and (max-width: 344px) and (max-height: 882px){
+    .stopTimer{ width: 90%; height: 80px; font-size: 24px; padding-top: 20px; margin-top: 170px; border-radius: 30px;}
+}
