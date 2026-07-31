@@ -1,0 +1,17 @@
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+
+# C/C++
+*.o
+*.so
+
+# Build
+build/
+dist/
