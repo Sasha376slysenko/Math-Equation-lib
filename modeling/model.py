@@ -295,7 +295,12 @@ class AppleSiliconTelemetry(BaseTelemetry):
 
     def _bg_powermetrics_reader(self) -> None:
         cmd: list[str] = [
-            "sudo", "powermetrics", "-i", "100", "-s", "cpu_power, smc"
+            "sudo",
+            "powermetrics",
+            "-i",
+            "100",
+            "-s",
+            "cpu_power,thermal"
         ]
         self._proc = subprocess.Popen(
             cmd, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, text=True
@@ -307,7 +312,7 @@ class AppleSiliconTelemetry(BaseTelemetry):
                 break
             buffer.append(line)
 
-            if "Running tasks" in line or "** Sample data:" in line:
+            if line.startswith("***") and buffer:
                 text: str = "".join(buffer)
                 self._parse_stdout_low_level_counter(text)
                 buffer.clear()
@@ -315,11 +320,9 @@ class AppleSiliconTelemetry(BaseTelemetry):
     def _parse_stdout_low_level_counter(self, text_cli: str) -> None:
         pattern_power: str = r"CPU Power:\s*([\d.]+)\s*(mW|W)"
         pattern_freq: str = r"(?:P-Cluster|CPU).*?frequency:\s*([\d.]+)\s*(MHz|GHz)"
-        pattern_temp: str = r"CPU.*?(?:die|thermal)\s+temperature:\s*([\d.]+)\s*C"
 
         metrics_power = re.search(pattern_power, text_cli)
         metrics_freq = re.search(pattern_freq, text_cli)
-        metrics_temp = re.search(pattern_temp, text_cli)
 
         # BLOCK 1: Parse power -> energy:
         if metrics_power:
@@ -351,10 +354,14 @@ class AppleSiliconTelemetry(BaseTelemetry):
             self._current_freq_mhz_cpu = value
 
         # BLOCK 3: Parse temperature:
-        if not metrics_temp:
-            self._current_temperature_cpu = 0.0
-        else:
-            self._current_temperature_cpu = float(metrics_temp.group(1))
+        if "Nominal" in text_cli:
+            self._current_temperature_cpu = 35.0
+        elif "Fair" in text_cli:
+            self._current_temperature_cpu = 55.0
+        elif "Serious" in text_cli:
+            self._current_temperature_cpu = 75.0
+        elif "Critical" in text_cli:
+            self._current_temperature_cpu = 95.0
 
 
     # SETTER

@@ -5,7 +5,7 @@ BLUE='\033[0;36m'
 ORANGE='\033[38;5;208m'
 NC='\033[0;0m'
 
-OS_TYPE="$(UNAME -S)"
+OS_TYPE="$(UNAME -s)"
 
 if [ "$OS_TYPE" = "Linux" ]; then
   RAPL_FILE='/sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj'
@@ -21,6 +21,7 @@ elif [ "$OS_TYPE" = "Darwin" ]; then
 else
   RUN_CMD="PYTHONPATH=. python modeling/main.py"
 fi
+
 
 echo -e "${GREEN} [START] Model${NC}"
 
