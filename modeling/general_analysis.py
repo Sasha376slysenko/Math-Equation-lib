@@ -2,9 +2,8 @@ from config import ConfigGeneralAnalysis
 from matplotlib import pyplot as plt
 from numpy.typing import NDArray
 from typing import ClassVar
+from pathlib import Path
 from typing import Final
-
-import os
 import numpy as np
 
 
@@ -53,7 +52,7 @@ class PlotHistogram:
 
         # Total List link arrays:
         # 1) CPU Load
-        # 2) CPU Frequancy
+        # 2) CPU Frequency
         # 3) RSS RAM
         # 4) Heap python
         # 5) CPU Temperature
