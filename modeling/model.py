@@ -178,21 +178,57 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
         self._process.cpu_percent(interval=3)
 
     def _current_cpu_temperature(self) -> float:
-        cpu_temp = psutil.sensors_temperatures()
-        cpu_temp = cpu_temp.get(self._CPU_SENSOR, [])
+        """
+        +-------------------------------------------------------+
+        |1. Read low level counter -> psutil -> sensors.        |
+        |2. Read sysfs -> /sys/class/thermal/thermal_zone0/temp.|
+        +-------------------------------------------------------+
+        :return: Temperature in Celsius
+        """
 
-        for sensor in cpu_temp:
-            if sensor.label == self._CPU_LABEL:
-                return sensor.current
+        # 1. Read low level counter -> psutil -> sensors.
+        try:
+            cpu_temp = psutil.sensors_temperatures()
 
-        # Create list temperature core_i
-        temps_cores: list[float] = []
+            if cpu_temp:
+                core_temp = cpu_temp.get(self._CPU_SENSOR, [])
+                for sensor in core_temp:
+                    if (sensor.label == self._CPU_LABEL
+                        and sensor.current is not None):
+                        return float(sensor.current)
 
-        for temp_core in cpu_temp:
-            value = temp_core.current
-            if value is not None:
-                temps_cores.append(value)
-        return float(max(temps_cores)) if temps_cores else 0.0
+            all_valid_temps: list[float] = []
+            for sensor_list in cpu_temp.values():
+                for s in sensor_list:
+                    if s.current is not None and s.current > 0:
+                        all_valid_temps.append(s.current)
+
+            if all_valid_temps:
+                return max(all_valid_temps)
+        except Exception:
+            pass
+
+        # 2. Read sysfs -> /sys/class/thermal/thermal_zone0/temp
+        try:
+            sys_temps: list[float] = []
+            thermal_zones = Path("/sys/class/thermal").glob("thermal_zone*")
+
+            for zone in thermal_zones:
+                temp_file = zone / "temp"
+                if temp_file.exists():
+                    val = float(temp_file.read_text().strip())
+
+                    if val > 1000:
+                        val /= 1000.0
+                    if 0 < val < 115:
+                        sys_temps.append(val)
+
+            if sys_temps:
+                return max(sys_temps)
+        except Exception:
+            pass
+        return 0.0
+
 
     def _read_bat_power(self) -> float:
         try:
