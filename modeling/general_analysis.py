@@ -9,6 +9,7 @@ import numpy as np
 
 
 class PlotHistogram:
+    plt.style.use("bmh")
     N_MEASUREMENT: ClassVar[int] = 150
 
     # Declaration
@@ -97,12 +98,19 @@ class PlotHistogram:
 
 
     def _create_plots_hist(self) -> None:
-        plt.style.use("bmh")
+        sqrt_n_mes: float = np.sqrt(self.N_MEASUREMENT)
         x: NDArray = np.arange(len(self._list_dir))
         STEP: Final[int] = 2
         width: float = 0.40
         counter: int = 0
 
+        # Error style
+        err_kw: dict[str, float] = {
+            "capsize": 5,
+            "capthick": 2,
+            "elinewidth": 1.5
+        }
+        # Labels
         sup_titles: tuple[str, ...] = (
             "CPU Performance",
             "Memory Usage",
@@ -119,6 +127,7 @@ class PlotHistogram:
         label_2: str = "Custom_eval"
         label_res_1: str | None
         label_res_2: str | None
+
 
         for sup_title_i, title_i in zip(sup_titles, titles_hist):
             fig, axes = plt.subplots(1, 2, figsize=(12, 7))
@@ -145,18 +154,18 @@ class PlotHistogram:
                     matrix_c_ev_1_i,
                     matrix_c_ev_2_i
             )):
-                std_1_ev: float = np.std(arr_1_ev)
-                std_2_ev: float = np.std(arr_2_ev)
                 mean_1_ev: float = np.mean(arr_1_ev)
                 mean_2_ev: float = np.mean(arr_2_ev)
-                std_1_c_ev: float = np.std(arr_1_c_ev)
-                std_2_c_ev: float = np.std(arr_2_c_ev)
                 mean_1_c_ev: float = np.mean(arr_1_c_ev)
                 mean_2_c_ev: float = np.mean(arr_2_c_ev)
-                err_low_ev_1: float = np.minimum(mean_1_ev, std_1_ev)
-                err_low_ev_2: float = np.minimum(mean_2_ev, std_2_ev)
-                err_low_c_ev_1: float = np.minimum(mean_1_c_ev, std_1_c_ev)
-                err_low_c_ev_2: float = np.minimum(mean_2_c_ev, std_2_c_ev)
+                sme_1_ev: float = np.std(arr_1_ev) / sqrt_n_mes
+                sme_2_ev: float = np.std(arr_2_ev) / sqrt_n_mes
+                sme_1_c_ev: float = np.std(arr_1_c_ev) / sqrt_n_mes
+                sme_2_c_ev: float = np.std(arr_2_c_ev) / sqrt_n_mes
+                err_low_ev_1: float = np.minimum(mean_1_ev, sme_1_ev)
+                err_low_ev_2: float = np.minimum(mean_2_ev, sme_2_ev)
+                err_low_c_ev_1: float = np.minimum(mean_1_c_ev, sme_1_c_ev)
+                err_low_c_ev_2: float = np.minimum(mean_2_c_ev, sme_2_c_ev)
 
                 # Position BAR: Group BAR
                 position_1: float = x[i] - width / 2
@@ -173,20 +182,20 @@ class PlotHistogram:
                 axes[0].bar(position_1, mean_1_ev, width=width, align="center",
                             color="#d95f02", hatch="\\", edgecolor="black",
                             linewidth=2.5, alpha=0.5, label=label_res_1,
-                            yerr=[[err_low_ev_1], [std_1_ev]])
+                            yerr=[[err_low_ev_1], [sme_1_ev]], error_kw=err_kw)
                 axes[0].bar(position_2, mean_1_c_ev, width=width, align="center",
                             color="green", hatch="*", edgecolor="black",
                             linewidth=2.5, alpha=0.5, label=label_res_2,
-                            yerr=[[err_low_c_ev_1], [std_1_c_ev]])
+                            yerr=[[err_low_c_ev_1], [sme_1_c_ev]], error_kw=err_kw)
 
                 axes[1].bar(position_1, mean_2_ev, width=width, align="center",
                             color="#d95f02", hatch="\\", edgecolor="black",
                             linewidth=2.5, alpha=0.5, label=label_res_1,
-                            yerr=[[err_low_ev_2], [std_2_ev]])
+                            yerr=[[err_low_ev_2], [sme_2_ev]], error_kw=err_kw)
                 axes[1].bar(position_2, mean_2_c_ev, width=width, align="center",
                             color="green", hatch="*", edgecolor="black",
                             linewidth=2.5, alpha=0.5, label=label_res_2,
-                            yerr=[[err_low_c_ev_2], [std_2_c_ev]])
+                            yerr=[[err_low_c_ev_2], [sme_2_c_ev]], error_kw=err_kw)
 
             # Architecture
             arch_names: list[str] = [

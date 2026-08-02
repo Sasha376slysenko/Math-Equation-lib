@@ -598,7 +598,7 @@ class ModelTelemetry:
 
     def _forward_model(self, func_equation,
                        dict_matrix: dict[str, NDArray[np.float64]]) -> None:
-        ITERATIONS: Final[int] = 3
+        ITERATIONS: Final[int] = 10
 
         for i, (name, digits) in enumerate(self.dict_digits.dict_digits_4.items()):
             for j, digit in enumerate(digits):
