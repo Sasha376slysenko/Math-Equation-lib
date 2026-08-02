@@ -177,16 +177,18 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
     def _warmup(self) -> None:
         self._process.cpu_percent(interval=3)
 
+
     def _current_cpu_temperature(self) -> float:
         """
-        +-------------------------------------------------------+
-        |1. Read low level counter -> psutil -> sensors.        |
-        |2. Read sysfs -> /sys/class/thermal/thermal_zone0/temp.|
-        +-------------------------------------------------------+
+        +----------------------------------------------------------------+
+        |1. Read low-level counters -> psutil.sensors_temperatures.      |
+        |2. Read direct hwon sysfs -> (/sys/class/hwon/hwon*/temp).      |
+        |3. Read thermal zone sysfs -> (/sys/class/thermal/thermal_zone*)|
+        +----------------------------------------------------------------+
         :return: Temperature in Celsius
         """
 
-        # 1. Read low level counter -> psutil -> sensors.
+        # 1. Read low-level counters -> psutil.sensors_temperatures.
         try:
             cpu_temp = psutil.sensors_temperatures()
 
@@ -208,7 +210,28 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
         except Exception:
             pass
 
-        # 2. Read sysfs -> /sys/class/thermal/thermal_zone0/temp
+        # 2. Read direct hwon sysfs -> (/sys/class/hwon/hwon*/temp).
+        try:
+            hwon_temps: list[float] = []
+            hwon_cpu_temps = Path("/sys/class/hwon").glob("hwon*/temp*_input")
+
+            for temp_file in hwon_cpu_temps:
+                try:
+                    val = float(temp_file.read_text().strip())
+
+                    if val > 1000:
+                        val /= 1000.0
+                    if 0 < val < 115:
+                        hwon_temps.append(val)
+                except (ValueError, OSError):
+                    continue
+
+            if hwon_temps:
+                return max(hwon_temps)
+        except Exception:
+            pass
+
+        # 3. Read thermal zone sysfs -> (/sys/class/thermal/thermal_zone*)
         try:
             sys_temps: list[float] = []
             thermal_zones = Path("/sys/class/thermal").glob("thermal_zone*")
