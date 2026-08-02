@@ -3,6 +3,7 @@ import re
 import platform
 import subprocess
 from pathlib import Path
+from typing import ClassVar
 from dataclasses import dataclass, field
 
 
@@ -80,7 +81,7 @@ class Config:
 
     plot_ram_use: str = field(init=False)
     plot_cpu_use: str = field(init=False)
-    self.plot_total_res: str = field(init=False)
+    plot_total_res: str = field(init=False)
     plot_cpu_energy_use: str = field(init=False)
     plot_cpu_use_temp_profile: str = field(init=False)
 
@@ -119,3 +120,68 @@ class Config:
         self.plot_total_res = os.path.join(self.SAVE_DIR_PLOT, "total_res.png")
         self.plot_cpu_energy_use = os.path.join(self.SAVE_DIR_PLOT, "cpu_energy_used.png")
         self.plot_cpu_use_temp_profile = os.path.join(self.SAVE_DIR_PLOT, "hardware_3d_profile.png")
+
+
+@dataclass(frozen=True)
+class ConfigGeneralAnalysis:
+    BASE_DIR: Path = Path(__file__).parent
+
+    # CONSTS
+    DIR_DATA_CSV: ClassVar[tuple[str, ...]] = (
+        "python_eval", "custom_eval"
+    )
+    FILE_MATRIX_2D: ClassVar[tuple[tuple[str, ...], ...]] = (
+        (
+            "cpu_load_ev.csv", "cpu_freq_ev.csv",
+            "ram_rss_ev.csv", "py_heap_ev.csv",
+            "cpu_temp_ev.csv", "cpu_energy_ev.csv"
+        ),
+        (
+            "cpu_load_c_ev.csv", "cpu_freq_c_ev.csv",
+            "ram_rss_c_ev.csv", "py_heap_c_ev.csv",
+            "cpu_temp_c_ev.csv", "cpu_energy_c_ev.csv"
+        )
+    )
+
+
+    @property
+    def base_dir_data(self) -> Path:
+        return self.BASE_DIR / 'data'
+
+
+    @property
+    def plot_dir(self) -> Path:
+        return self.BASE_DIR / 'results' / 'general_results'
+
+
+    @property
+    def list_dir(self) -> tuple[str, ...]:
+        return tuple(
+            entry.name
+            for entry in self.base_dir_data.iterdir()
+            if entry.is_dir()
+        )
+
+
+    @staticmethod
+    def _full_name_file_dir(dir_name: Path,
+                            dir_csv: str,
+                            file_name: tuple[str, ...]
+                            ) -> tuple[Path, ...]:
+        return tuple(
+            'data' / dir_name / dir_csv / file_name_i
+            for file_name_i in file_name
+        )
+
+
+    def file_matrix_2d(self,
+                       dir_name: str
+                       ) -> tuple[tuple[Path, ...], tuple[Path, ...]]:
+        # Path dir DATA
+        data_dir: Path = Path(dir_name)
+
+        # RESULT Dir file data -> MATRIX 2D
+        return tuple(
+            self._full_name_file_dir(data_dir, dir_csv, f_name)
+            for dir_csv, f_name in zip(self.DIR_DATA_CSV, self.FILE_MATRIX_2D)
+        )

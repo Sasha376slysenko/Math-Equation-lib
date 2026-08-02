@@ -598,6 +598,8 @@ class ModelTelemetry:
 
     def _forward_model(self, func_equation,
                        dict_matrix: dict[str, NDArray[np.float64]]) -> None:
+        ITERATIONS: Final[int] = 3
+
         for i, (name, digits) in enumerate(self.dict_digits.dict_digits_4.items()):
             for j, digit in enumerate(digits):
                 # Init state
@@ -605,7 +607,8 @@ class ModelTelemetry:
                 snap_before = tracemalloc.take_snapshot()
 
                 # Func create equations
-                func_equation(digit)
+                for _ in range(ITERATIONS):
+                    func_equation(digit)
 
                 # Final state
                 snap_after = tracemalloc.take_snapshot()
