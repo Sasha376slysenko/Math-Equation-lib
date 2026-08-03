@@ -180,11 +180,11 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
 
     def _current_cpu_temperature(self) -> float:
         """
-        +----------------------------------------------------------------+
-        |1. Read low-level counters -> psutil.sensors_temperatures.      |
-        |2. Read direct hwon sysfs -> (/sys/class/hwon/hwon*/temp).      |
-        |3. Read thermal zone sysfs -> (/sys/class/thermal/thermal_zone*)|
-        +----------------------------------------------------------------+
+        +-------------------------------------------------------------------+
+        |1. Read low-level counters -> psutil.sensors_temperatures.         |
+        |2. Read direct Intel coretemp -> (/sys/devices/platform/coretemp.0)|
+        |3. Read hwmon sysfs -> ("sys/class/hwmon").                        |
+        +-------------------------------------------------------------------+
         :return: Temperature in Celsius
         """
 
@@ -196,7 +196,8 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
                 core_temp = cpu_temp.get(self._CPU_SENSOR, [])
                 for sensor in core_temp:
                     if (sensor.label == self._CPU_LABEL
-                        and sensor.current is not None):
+                        and sensor.current is not None
+                        and sensor.current > 0):
                         return float(sensor.current)
 
             all_valid_temps: list[float] = []
@@ -210,41 +211,43 @@ class LegacyIntelLinuxTelemetry(BaseTelemetry):
         except Exception:
             pass
 
-        # 2. Read direct hwon sysfs -> (/sys/class/hwon/hwon*/temp).
+        # 2. Read direct Intel coretemp
         try:
-            hwon_temps: list[float] = []
-            hwon_cpu_temps = Path("/sys/class/hwon").glob("hwon*/temp*_input")
+            coretemp_dir = Path("/sys/devices/platform/coretemp.0")
+            if coretemp_dir.exists():
+                coretemp_vals: list[float] = []
 
-            for temp_file in hwon_cpu_temps:
-                try:
-                    val = float(temp_file.read_text().strip())
+                # Read Temperature file hwmon*
+                for temp_file in coretemp_dir.rglob("temp*_input"):
+                    try:
+                        val = float(temp_file.read_text().strip())
 
-                    if val > 1000:
-                        val /= 1000.0
-                    if 0 < val < 115:
-                        hwon_temps.append(val)
-                except (ValueError, OSError):
-                    continue
+                        if val > 1000:
+                            val /= 1000.0
+                        if 0 < val < 115:
+                            coretemp_vals.append(val)
+                    except (ValueError, OSError):
+                        continue
 
-            if hwon_temps:
-                return max(hwon_temps)
+                if coretemp_vals:
+                    return max(coretemp_vals)
         except Exception:
             pass
 
-        # 3. Read thermal zone sysfs -> (/sys/class/thermal/thermal_zone*)
+        # 3. Read hwmon sysfs
         try:
             sys_temps: list[float] = []
-            thermal_zones = Path("/sys/class/thermal").glob("thermal_zone*")
+            for hwmon_dir in Path("/sys/class/hwmon").glob("hwmon*"):
+                for temp_file in hwmon_dir.glob("temp*_input"):
+                    try:
+                        val = float(temp_file.read_text().strip())
 
-            for zone in thermal_zones:
-                temp_file = zone / "temp"
-                if temp_file.exists():
-                    val = float(temp_file.read_text().strip())
-
-                    if val > 1000:
-                        val /= 1000.0
-                    if 0 < val < 115:
-                        sys_temps.append(val)
+                        if val > 1000:
+                            val /= 1000.0
+                        if 0 < val < 115:
+                            sys_temps.append(val)
+                    except (ValueError, OSError):
+                        continue
 
             if sys_temps:
                 return max(sys_temps)
