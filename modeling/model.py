@@ -468,7 +468,7 @@ class TelemetryFactor:
         elif "13500h" in arch_name or "14500h" in arch_name:
             print("[INFO] Modern Intel{13-24} architecture")
             return ModernIntelLinuxTelemetry()
-        elif "750m" in arch_name or "x86_64" in arch_name:
+        elif "560m" in arch_name or "5" in arch_name or "x86_64" in arch_name:
             print("[INFO] Legacy Intel{1-2} architecture")
             return LegacyIntelLinuxTelemetry()
         else:
