@@ -463,10 +463,13 @@ class TelemetryFactor:
     @staticmethod
     def create_telemetry(arch_name: str) -> BaseTelemetry:
         if "apple" in arch_name or "darwin" in arch_name:
+            print("[INFO] Apple architecture")
             return AppleSiliconTelemetry()
         elif "13500h" in arch_name or "14500h" in arch_name:
+            print("[INFO] Modern Intel{13-24} architecture")
             return ModernIntelLinuxTelemetry()
         elif "750m" in arch_name or "x86_64" in arch_name:
+            print("[INFO] Legacy Intel{1-2} architecture")
             return LegacyIntelLinuxTelemetry()
         else:
             return ModernIntelLinuxTelemetry()
