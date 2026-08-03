@@ -472,6 +472,7 @@ class TelemetryFactor:
             print("[INFO] Legacy Intel{1-2} architecture")
             return LegacyIntelLinuxTelemetry()
         else:
+            print(f"[INFO] Unknown architecture: {arch_name}")
             return ModernIntelLinuxTelemetry()
 
 
