@@ -163,13 +163,13 @@ class ConfigGeneralAnalysis:
         )
 
 
-    @staticmethod
-    def _full_name_file_dir(dir_name: Path,
+    def _full_name_file_dir(self,
+                            dir_name: Path,
                             dir_csv: str,
                             file_name: tuple[str, ...]
                             ) -> tuple[Path, ...]:
         return tuple(
-            'data' / dir_name / dir_csv / file_name_i
+            self.base_dir_data / dir_name / dir_csv / file_name_i
             for file_name_i in file_name
         )
 

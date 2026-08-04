@@ -758,8 +758,3 @@ class ModelTelemetry:
     def run_model(self) -> None:
         self._forward_telemetry()
         self._export_data()
-
-
-if __name__ == "__main__":
-    telemetry = ModelTelemetry()
-    telemetry.run_model()
