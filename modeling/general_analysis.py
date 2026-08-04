@@ -101,6 +101,7 @@ class PlotHistogram:
         x: NDArray = np.arange(len(self._list_dir))
         STEP: Final[int] = 2
         width: float = 0.40
+        height: float = 1.5
         counter: int = 0
 
         # Error style
@@ -116,10 +117,11 @@ class PlotHistogram:
             "CPU Thermal & Energy"
         )
         titles_hist: tuple[tuple[str, str], ...] = (
-            ("CPU Load (%)", "CPU Frequancy (MHz)"),
+            ("CPU Load (%)", "CPU Frequency (MHz)"),
             ("RSS (MB)", "Heap python (MB)"),
             ("Temperature (°C)", "Energy (J)")
         )
+        y_label_log: str = "Logarithmic value"
         y_label: str = "Metric value"
         x_label: str = "Architecture"
         label_1: str = "Python_eval"
@@ -128,7 +130,7 @@ class PlotHistogram:
         label_res_2: str | None
 
 
-        for sup_title_i, title_i in zip(sup_titles, titles_hist):
+        for i, (sup_title_i, title_i) in enumerate(zip(sup_titles, titles_hist)):
             fig, axes = plt.subplots(1, 2, figsize=(12, 7))
             plt.suptitle(sup_title_i, fontsize=24, fontweight='bold')
 
@@ -140,13 +142,17 @@ class PlotHistogram:
             axes[0].set_ylabel(y_label, fontsize=16)
             axes[1].set_ylabel(y_label, fontsize=16)
 
+            if i == 2:
+                axes[1].set_yscale('log')
+                axes[1].set_ylabel(y_label_log, fontsize=16)
+
             # Current Matrix
             matrix_ev_1_i = self.tuple_python_eval[counter]
             matrix_ev_2_i = self.tuple_python_eval[counter+1]
             matrix_c_ev_1_i = self.tuple_custom_eval[counter]
             matrix_c_ev_2_i = self.tuple_custom_eval[counter+1]
 
-            for i, (arch_name, arr_1_ev, arr_2_ev, arr_1_c_ev, arr_2_c_ev) in enumerate(zip(
+            for j, (arch_name, arr_1_ev, arr_2_ev, arr_1_c_ev, arr_2_c_ev) in enumerate(zip(
                     self._list_dir,
                     matrix_ev_1_i,
                     matrix_ev_2_i,
@@ -167,11 +173,11 @@ class PlotHistogram:
                 err_low_c_ev_2: float = np.minimum(mean_2_c_ev, sme_2_c_ev)
 
                 # Position BAR: Group BAR
-                position_1: float = x[i] - width / 2
-                position_2: float = x[i] + width / 2
+                position_1: float = x[j] - width / 2
+                position_2: float = x[j] + width / 2
 
                 # LABELS: Legend figure
-                if i == 0:
+                if j == 0:
                     label_res_1 = label_1
                     label_res_2 = label_2
                 else:
@@ -195,6 +201,18 @@ class PlotHistogram:
                             color="green", hatch="*", edgecolor="black",
                             linewidth=2.5, alpha=0.5, label=label_res_2,
                             yerr=[[err_low_c_ev_2], [sme_2_c_ev]], error_kw=err_kw)
+
+                # Annotation
+                diff_1_pct = (1.0 - mean_1_c_ev / mean_1_ev) * 100
+                diff_2_pct = (1.0 - mean_2_c_ev / mean_2_ev) * 100
+
+                axes[0].annotate(f"{diff_1_pct:+.1f}%",
+                                 xy=(position_2, mean_1_c_ev + height),
+                                 ha='center', va='bottom', fontsize=14, fontweight='bold')
+
+                axes[1].annotate(f"{diff_2_pct:+.1f}%",
+                                 xy=(position_2, mean_2_c_ev + height),
+                                 ha='center', va='bottom', fontsize=14, fontweight='bold')
 
             # Architecture
             arch_names: list[str] = [
